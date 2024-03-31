@@ -1,0 +1,39 @@
+const tmi = require('tmi.js')
+
+const options = {
+    options: {
+        debug: true
+    },
+    connection: {
+        reconnect: true
+    },
+    identity: {
+        username: '95rk16',
+        password:'oauth:v5kvni3ui028ymr8vzeo5td3i5a834'
+    },
+    channels: ['fijev68799']
+}
+
+const client = new tmi.client(options)
+
+client.connect();
+
+client.on('connected', (address, port) => {
+    client.action('fijev68799', `Hola estoy conectada! <3`)
+})
+
+client.on('chat', (target, ctx, message, self) => {
+    if (self) return;
+
+    console.log(target);
+    console.log(ctx)
+
+    const commandName = message.trim();
+
+    if (commandName === "Hola"){
+        client.say(target, `Hola <3 ${ctx.username}`)
+    }
+    if (commandName === "!redes"){
+        client.say(target, `https://x.com/95rk16 DinoDance ${ctx.username}`)
+    }
+})
